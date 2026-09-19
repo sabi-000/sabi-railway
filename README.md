@@ -2,15 +2,28 @@
 
 پروژه تستی دانشگاه تهران — Blue Knight Gate، آماده‌سازی‌شده برای Railway.
 
-## Deploy سریع
+این ریپو شامل `index.js`، `package.json`، `Dockerfile` و `railway.json` است. Railway با اتصال به همین ریپو build و start را خودکار انجام می‌دهد.
 
-در Railway گزینه **Deploy from GitHub repo** را انتخاب کنید و این repository را متصل کنید. Railway با `railway.json` و `Dockerfile` به‌صورت خودکار build و اجرا می‌کند.
+## راهنمای فارسی
 
-پس از deploy:
+راهنمای کامل نصب، Deploy، Volume، Domain، متغیرهای محیطی، تست و رفع خطا در فایل [راهنمای فارسی](docs/DEPLOY_FA.md) قرار دارد.
 
-1. در Service Settings → Networking یک Domain بسازید.
-2. برای نگهداری state و باینری‌ها یک Volume با mount path `/data` اضافه کنید.
-3. مقدار `BK_DATA_DIR=/data/bk-data` از قبل تنظیم شده است.
-4. در صورت نیاز، TCP Proxy را برای پورت داخلی سرویس فعال کنید.
+خلاصه مراحل:
 
-برنامه پورت اختصاص‌داده‌شده توسط Railway (`PORT`) را استفاده می‌کند و endpoint سلامت آن `/health` است.
+1. در Railway یک Project جدید بسازید.
+2. گزینه Deploy from GitHub repo را انتخاب و `sabi-karami/sabi-railway` را متصل کنید.
+3. صبر کنید Docker build و Deploy تمام شود.
+4. در Service Settings → Volumes یک Volume با mount path `/data` بسازید.
+5. در Networking یک Domain ایجاد کنید.
+6. آدرس Domain را باز کنید و `/health` را برای تست سلامت بررسی کنید.
+
+## English guide
+
+The complete deployment, volume, domain, environment-variable, testing, and troubleshooting instructions are in [the English guide](docs/DEPLOY_EN.md).
+
+## Important notes
+
+- The service uses Railway's assigned `PORT` automatically.
+- Persistent data and downloaded binaries are stored under `/data/bk-data` when a Railway Volume is mounted at `/data`.
+- The web panel is exposed through the Railway HTTP domain. TCP-based protocols require Railway TCP Proxy and may have platform-specific limitations.
+- Never commit passwords, tokens, private keys, or other secrets to GitHub. Use Railway Variables instead.
