@@ -30,6 +30,30 @@ git clone https://github.com/sabi-karami/sabi-railway.git && cd sabi-railway && 
 
 این دستور در صورت نیاز ورود به Railway را انجام می‌دهد، پروژه/سرویس را می‌سازد یا به آن متصل می‌شود و کد را Deploy می‌کند. Domain عمومی خودکار ساخته نمی‌شود؛ بعد از Deploy از بخش Networking یک Domain بسازید.
 
+## اجرای خودکار Deploy، Volume و Domain
+
+برای Windows فایل `scripts/setup-railway.ps1` و برای Linux/macOS فایل `scripts/setup-railway.sh` در ریپو قرار داده شده است.
+
+پیش‌نیاز: Railway CLI را نصب کنید و یک‌بار وارد شوید:
+
+```bash
+railway login
+```
+
+سپس در ریشه ریپو اجرا کنید:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\setup-railway.ps1
+```
+
+یا در Linux/macOS:
+
+```bash
+bash ./scripts/setup-railway.sh
+```
+
+اسکریپت به‌ترتیب Deploy را انجام می‌دهد، Volume با مسیر `/data` می‌سازد و Domain سرویس Railway را تولید می‌کند. رمز عبور یا Token داخل GitHub ذخیره نمی‌شود.
+
 ## Volume الزامی
 
 برای حفظ state، UUIDها، لاگ‌ها و باینری‌های دانلودشده:

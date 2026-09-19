@@ -31,6 +31,20 @@ git clone https://github.com/sabi-karami/sabi-railway.git && cd sabi-railway && 
 
 The command signs you in if needed, creates/links a Railway project, and deploys the current directory. It does not create a public domain automatically; add a domain from Railway Networking afterward.
 
+## Automated setup: deploy + volume + domain
+
+The repository includes `scripts/setup-railway.ps1` for Windows and `scripts/setup-railway.sh` for macOS/Linux. After installing the Railway CLI and signing in, run one of these from the repository root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\setup-railway.ps1
+```
+
+```bash
+bash ./scripts/setup-railway.sh
+```
+
+The script deploys the service, creates/attaches the `/data` volume, and generates a Railway service domain. It does not store Railway passwords or tokens in GitHub. See the full guides for prerequisites and rerun behavior.
+
 ## Important notes
 
 - The service uses Railway's assigned `PORT` automatically.
