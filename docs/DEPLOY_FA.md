@@ -34,7 +34,7 @@ git clone https://github.com/sabi-karami/sabi-railway.git && cd sabi-railway && 
 
 برای Windows فایل `scripts/setup-railway.ps1` و برای Linux/macOS فایل `scripts/setup-railway.sh` در ریپو قرار داده شده است.
 
-پیش‌نیاز: Railway CLI را نصب کنید و یک‌بار وارد شوید:
+پیش‌نیاز: Node.js/npm باید روی سیستم نصب باشد. اسکریپت در صورت نبودن Railway CLI آن را با npm نصب می‌کند. سپس یک‌بار وارد شوید:
 
 ```bash
 railway login

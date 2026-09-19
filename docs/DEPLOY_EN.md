@@ -34,7 +34,7 @@ This signs you in if needed, creates or links the project/service, and deploys t
 
 The repository includes `scripts/setup-railway.ps1` for Windows and `scripts/setup-railway.sh` for Linux/macOS.
 
-Prerequisite: install the Railway CLI and sign in once:
+Prerequisite: Node.js/npm must be installed. If the Railway CLI is missing, the script installs it with npm. Then sign in once:
 
 ```bash
 railway login
