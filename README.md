@@ -21,6 +21,16 @@
 
 The complete deployment, volume, domain, environment-variable, testing, and troubleshooting instructions are in [the English guide](docs/DEPLOY_EN.md).
 
+## One-line manual deploy
+
+From a terminal where the Railway CLI is installed, run:
+
+```bash
+git clone https://github.com/sabi-karami/sabi-railway.git && cd sabi-railway && railway up -y
+```
+
+The command signs you in if needed, creates/links a Railway project, and deploys the current directory. It does not create a public domain automatically; add a domain from Railway Networking afterward.
+
 ## Important notes
 
 - The service uses Railway's assigned `PORT` automatically.

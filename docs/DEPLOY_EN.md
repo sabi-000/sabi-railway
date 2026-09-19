@@ -20,6 +20,16 @@ This repository is prepared for automated deployment:
 
 Railway reads `railway.json` automatically and starts the service with `npm start`.
 
+## One-line manual deploy
+
+If the Railway CLI is installed, run this from a terminal:
+
+```bash
+git clone https://github.com/sabi-karami/sabi-railway.git && cd sabi-railway && railway up -y
+```
+
+This signs you in if needed, creates or links the project/service, and deploys the code. It does not create a public domain automatically; add one from Networking after deployment.
+
 ## Required Volume
 
 To preserve state, UUIDs, logs, and downloaded binaries:

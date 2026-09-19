@@ -20,6 +20,16 @@
 
 Railway به‌صورت خودکار `railway.json` را می‌خواند و `npm start` را اجرا می‌کند.
 
+## دستور یک‌خطی برای Deploy دستی
+
+اگر Railway CLI روی سیستم نصب است، این دستور را در Terminal اجرا کنید:
+
+```bash
+git clone https://github.com/sabi-karami/sabi-railway.git && cd sabi-railway && railway up -y
+```
+
+این دستور در صورت نیاز ورود به Railway را انجام می‌دهد، پروژه/سرویس را می‌سازد یا به آن متصل می‌شود و کد را Deploy می‌کند. Domain عمومی خودکار ساخته نمی‌شود؛ بعد از Deploy از بخش Networking یک Domain بسازید.
+
 ## Volume الزامی
 
 برای حفظ state، UUIDها، لاگ‌ها و باینری‌های دانلودشده:
