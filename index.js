@@ -15,6 +15,7 @@ const BK_CONFIG = {
   nodePrefix: "BK-",
   channelUrl: "https://t.me/BlueKnight_Net",
   publicPort: 2705,
+  advertisedPort: null,
   panelPath: "knight",
   dataDirHint: "/home/container/bk-data",
   uuid: "",
@@ -299,6 +300,7 @@ const DEFAULT_CONFIG = {
   tagline: 'One port. Many paths. Blue Knight Net.',
   taglineFa: 'یک پورت. چند مسیر. Blue Knight Net',
   publicPort: 2705,
+  advertisedPort: null,
   panelPath: 'knight',
   dataDirHint: '/home/container/bk-data',
   uuid: '',
@@ -428,6 +430,9 @@ function buildConfig(userOverrides = {}) {
 
   if (env.PORT || env.SERVER_PORT || env.SB_PORT) {
     cfg.publicPort = parseInt(env.PORT || env.SERVER_PORT || env.SB_PORT, 10);
+  }
+  if (env.PUBLIC_PORT || env.TCP_PROXY_PORT) {
+    cfg.advertisedPort = parseInt(env.PUBLIC_PORT || env.TCP_PROXY_PORT, 10);
   }
   if (env.UUID || env.SB_UUID) cfg.uuid = env.UUID || env.SB_UUID;
   if (env.DOMAIN || env.SB_DOMAIN) cfg.domain = env.DOMAIN || env.SB_DOMAIN;
@@ -1659,7 +1664,9 @@ class LinkGenerator {
     this.config = config;
     this.state = state;
     this.host = config.forceHost || resolvedHost || config.domain || '127.0.0.1';
-    this.port = config.publicPort;
+    // Railway TCP Proxy has a public port different from the internal PORT.
+    // Keep listening on publicPort, but advertise the externally reachable port.
+    this.port = config.advertisedPort || config.publicPort;
     this.prefix = config.nodePrefix || 'BK-';
     this.wsPath = `/${config.panelPath}-ws`;
     this.huPath = `/${config.panelPath}-hu`;
