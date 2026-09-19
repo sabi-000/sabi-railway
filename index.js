@@ -927,8 +927,17 @@ class BinaryManager {
  * Creates self-signed certificate using Node's crypto or openssl
  */
 function ensureTlsCertificates(certPath, keyPath, sni = 'www.google.com') {
+  fs.mkdirSync(path.dirname(certPath), { recursive: true });
+
   if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
-    return true;
+    // A previous fallback could have left an invalid PEM file in the
+    // persistent volume. Validate both files before reusing them.
+    try {
+      const check = spawnSync('openssl', ['x509', '-in', certPath, '-noout'], { timeout: 5000 });
+      if (check.status === 0) return true;
+    } catch {}
+    try { fs.unlinkSync(certPath); } catch {}
+    try { fs.unlinkSync(keyPath); } catch {}
   }
 
   // First try openssl if installed
@@ -945,26 +954,8 @@ function ensureTlsCertificates(certPath, keyPath, sni = 'www.google.com') {
     }
   } catch {}
 
-  // Fallback: Create self-signed X.509 cert via Node crypto
-  try {
-    const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
-      modulusLength: 2048,
-      publicKeyEncoding: { type: 'spki', format: 'pem' },
-      privateKeyEncoding: { type: 'pkcs8', format: 'pem' }
-    });
-
-    // In modern Node (>=15.6), X509Certificate can format or openssl can wrap
-    // If pure Node without openssl:
-    fs.writeFileSync(keyPath, privateKey, 'utf8');
-
-    // For openssl-less environments:
-    const certForge = `-----BEGIN CERTIFICATE-----\n${Buffer.from(publicKey).toString('base64').match(/.{1,64}/g)?.join('\n') || ''}\n-----END CERTIFICATE-----`;
-    fs.writeFileSync(certPath, certForge, 'utf8');
-    return true;
-  } catch (err) {
-    Logger.error(`Failed to generate TLS certificate: ${err.message}`);
-    return false;
-  }
+  Logger.error('OpenSSL is required to create a valid TLS certificate.');
+  return false;
 }
 
 class SingBoxEngine {
